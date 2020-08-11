@@ -1,0 +1,23 @@
+.notification.is-info {
+    background-color: #3298dc;
+    color: rgb(136, 178, 202);
+    width: 30%;
+    margin-left: 10%;
+}
+.message-header {
+    color: #fff;
+    width: 50%;
+}
+.title.is-2{
+    color: #fff;
+
+}
+.notification{
+    width: 50%;
+}
+.app {
+    text-align: center;
+}
+.input.is-rounded {
+    width: 25%;
+}
