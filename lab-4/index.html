@@ -5,6 +5,9 @@
 	<link rel="stylesheet" type="text/css" href="../src/reset.css">
 	<link rel="stylesheet" type="text/css" href="lab.css">
 	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+	<script type="text/javascript" src="js/script.js"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
 	<div id="canvas">
@@ -30,6 +33,7 @@
 			<div>
 				{{score}} คะแนน
 			</div>
+			<div id = 'target'> </div>
 		</section>
 	</div>
 
@@ -45,7 +49,7 @@
 			el:'#canvas',
 			data:{
 				row:2, //จำนวนแถวที่จะมีในรอบนี้
-				h:200, // hue ในรอบนี้
+				h:0, // hue ในรอบนี้
 				time:20, //เวลาเริ่มต้น
 				score:0, //คะแนนเริ่มต้น
 				pick:1, //หมายเลขวงกลมที่จะสีแตกต่างจากก้อนอื่นๆ
@@ -57,6 +61,7 @@
 			},
 			methods: {
 				check: function(e){
+					if(this.time > 0){
 					if (e==true) {
 						app.correct()
 					}else{
@@ -64,6 +69,10 @@
 					}
 					console.log(e)
 					//ทำให้เช็คก่อนว่าถูกมั้ย
+				}
+				else{
+					app.show()
+				}
 				},
 				correct: function(){
 					//เข้าด่านต่อไป
@@ -71,8 +80,10 @@
 					this.pick = rand(1,this.row*this.row)
 					app.score++
 					app.combo++
+					app.h += 20
+					app.l -= 2
 					if (app.combo==5) {
-						app.time+=3
+						app.time+=2
 						app.combo=0
 					}
 					console.log('Correct!')
@@ -83,9 +94,19 @@
 					app.score--
 					app.combo=0
 					console.log('Incorrect!')
+				},
+				show : function(){
+					if (app.score >=10) {
+						app.h += 10
+						app.l += 20
+						document.getElementById('target').innerHtml = '<img src="https://25.media.tumblr.com/tumblr_m5kv2t19Mm1rqk3zwo1_400.gif"/>';
+
+		}
 				}
+				
 			}
 		})
+		
 		//ทำให้แคนวาสมี --picklight ตามที่กำหนดไว้ข้างบนนี้
 		document.querySelector('#canvas').style.setProperty('--picklight',picklight);
 		
