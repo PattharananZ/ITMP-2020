@@ -2,92 +2,160 @@
 <html>
 
 <head>
-	<title>The Members - ITKMITL Multimedia Programming 2563</title>
-
-	<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-	<link rel="stylesheet" type="text/css" href="lab.css">
+  <title>The Members - ITKMITL Multimedia Programming 2563</title>
+  <title>Lab1 - Multimedia Programming 2563 ITKMITL</title>
+  <link rel="stylesheet" href="../src/reset.css" />
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.0/css/bulma.min.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <link rel="stylesheet" type="text/css" href="lab.css" />
 </head>
+<style>
+  .notification.is-info {
+    background-color: #3298dc;
+    color: rgb(230, 246, 255);
+    width: 30%;
+    margin-left: 10%;
+    text-align: center;
+  }
+
+  .title.is-1 {
+    color: #fff;
+  }
+
+  .message-header {
+    color: #fff;
+  }
+
+  .message-body {
+    color: rgb(53, 32, 32);
+  }
+
+  .message {
+    color: #fff;
+    width: 50%;
+  }
+
+  .title.is-2 {
+    color: #fff;
+  }
+
+  .notification {
+    width: 50%;
+  }
+
+  .app {
+    text-align: center;
+  }
+
+  .input.is-rounded {
+    width: 25%;
+  }
+  .text-black{
+    color: black;
+    font-size: 200%;
+  }
+  .text-black1{
+    color: rgb(139, 0, 0);
+    font-size: 200%;
+  }
+</style>
 
 <body>
-	<div id="app">
-		About
-		<h3>Class {{person.classes}}</h3>
-		<h3>Set play {{person.sets}}</h3>
-		<h3>Type {{person.types}}</h3>
-		<h3>Faction {{person.factions}}</h3>
-		<h3>Quality {{person.qualities}}</h3>
-		<h3>Race {{person.races}}</h3>
-		<button @click="isthisgood()">เขาเป็นพนักงานที่ดีหรือไม่</button>
-		<h2>{{yesno.answer}}</h2>
-		<img :src="yesno.image" alt="">
-		Users
-		<h2 v-for="u in user">{{u}}</h2>
-	</div>
-
-
-	<script>
-		fetch("https://omgvamp-hearthstone-v1.p.rapidapi.com/info", {
-			"method": "GET",
-			"headers": {
-				"x-rapidapi-host": "omgvamp-hearthstone-v1.p.rapidapi.com",
-				"x-rapidapi-key": "ec43e3142bmsh39ea3fdab30714ap107e94jsn4d314f6d2237"
-			}
-		})
-			.then(response => {
-				console.log(response.json());
-				app.user = response;
-			})
-			.catch(err => {
-				console.log(json);
-			})
-		let app = new Vue({
-			el: '#app',
-			methods: {
-				viewBio: function (user) {
-					this.person = user
-					this.yesno = {
-						"answer": "อยากรู้ คลิ้กเลย",
-						"forced": false,
-						"image": ""
-					}
-				},
-				isthisgood: function () {
-					fetch('https://yesno.wtf/api')
-						.then(response => response.json())
-						.then(json => {
-							app.yesno = json
-						})
-				}
-			},
-			data: {
-				yesno:
-				{
-					"answer": "อยากรู้ คลิ้กเลย",
-					"forced": false,
-					"image": ""
-				},
-				user: [{
-					classes: 0,
-					sets: '..loading',
-					types: '..loading',
-					factions: '..loading',
-					qualities: '..loading',
-					races: '..loading',
-					locales: '..loading',
-				}],
-				person: {
-					classes: 0,
-					sets: '..loading',
-					types: '..loading',
-					factions: '..loading',
-					qualities: '..loading',
-					races: '..loading',
-					locales: '..loading',
-				}
-			}
-		})
-
-	</script>
+  <div id="app">
+    <article class="message">
+      <div class="message-header">
+        <h1 class="title is-1">Heartstone API All Class about</h1>
+      </div>
+      <div class="message-body">
+        <h3 class="title is-3">Class : {{person.classes}}</h3>
+        <h3 class="title is-3">Set play : {{person.sets}}</h3>
+        <h3 class="title is-3">Type : {{person.types}}</h3>
+        <h3 class="title is-3">Faction : {{person.factions}}</h3>
+        <h3 class="title is-3">Quality : {{person.qualities}}</h3>
+        <h3 class="title is-3">Race : {{person.races}}</h3>
+      </div>
+      <div class="buttons are-medium">
+        <button class="button is-primary is-light" @click="isthisgood()">Good or Bad Deckcard Classes ?</button><br>
+    </article>
+    
+      <article class="message is-info">
+        <div class="message-header">
+          <img :src="yesno.image" alt="" />
+        </div>
+        <div class='text-black1'><b>[[Click classes below]]</b></div>
+        <h2 v-for="u in classes" class='text-black' @click="show(u)"><button class="button is-primary is-dark">{{u}}</button></h2>
+    </div>
+  </div>
+  <script>
+    fetch("https://omgvamp-hearthstone-v1.p.rapidapi.com/info", {
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "omgvamp-hearthstone-v1.p.rapidapi.com",
+        "x-rapidapi-key":
+          "ec43e3142bmsh39ea3fdab30714ap107e94jsn4d314f6d2237",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        app.classes = data.classes;
+        app.sets = data.sets;
+        app.types = data.types;
+        app.factions = data.factions;
+        app.qualities = data.qualities;
+        app.races = data.races;
+        // console.info(data.Results);
+      });
+    let app = new Vue({
+      el: "#app",
+      methods: {
+        viewBio: function (user) {
+          this.person = user;
+          this.yesno = {
+            answer: "อยากรู้ คลิ้กเลย",
+            forced: false,
+            image: "",
+          };
+        },
+        isthisgood: function () {
+          fetch("https://yesno.wtf/api")
+            .then((response) => response.json())
+            .then((json) => {
+              app.yesno = json;
+            });
+        },
+        show: function (u) {
+          let index = this.classes.indexOf(u);
+          // console.log(this.classes.indexOf(u))
+          this.person.classes = u;
+          this.person.sets = this.sets[index];
+          this.person.types = this.types[index];
+          this.person.factions = this.factions[index];
+          this.person.qualities = this.qualities[index];
+          this.person.races = this.races[index];
+        },
+      },
+      data: {
+        yesno: {
+          answer: "อยากรู้ คลิ้กเลย",
+          forced: false,
+          image: "",
+        },
+        classes: [],
+        person: {
+          classes: "...loading...",
+          sets: "...loading...",
+          types: "...loading...",
+          factions: "...loading...",
+          qualities: "...loading...",
+          races: "...loading...",
+          locales: "...loading...",
+        },
+        factions: [],
+      },
+    });
+  </script>
 </body>
 
 </html>
