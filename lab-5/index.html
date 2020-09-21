@@ -71,8 +71,49 @@
                 location.reload();
             }
             },
-            
-        })
+            computed: {},
+        watch: {
+          turn: function () {
+            for (let f in this.fruits) {
+              if (this.fruits[f].run) {
+                this.fruits[f].pst += this.fruits[f].step;
+              }
+              if (this.isRightArrow == 1 && this.fruits[f].pst == 11) {
+                this.fruits[f].pst = 13
+                this.fruits[f].step = 3;
+              }
+              if (this.fruits[f].pst == 12 || this.fruits[f].pst == 16) {
+                if (this.fruits[f].type == 'red' && this.fruits[f].pst == 12 && this.fruits[f].run == true){
+                    this.score++
+                    this.fruits[f].run = false
+                }
+                else if (this.fruits[f].type == 'yellow' && this.fruits[f].pst == 16 && this.fruits[f].run == true){
+                    this.score++
+                    this.fruits[f].run = false
+                }else if(this.fruits[f].pst == 12 && this.fruits[f].type == "yellow"){
+                  clearInterval(playing)
+                  this.play= false
+                }else if(this.fruits[f].pst == 16 && this.fruits[f].type == "red"){
+                  clearInterval(playing)
+                    this.play= false
+                }
+              }  
+            }
+            if (rand(1,10) % 2 == 0){
+                if(rand(1,10)%2 == 0){
+                    this.fruits.push({id: Next_fruid,type:'red',pst: 1,run:true,step:1})
+                }else{
+                    this.fruits.push({id: Next_fruid,type:'yellow',pst: 1,run:true,step:1})
+                }
+                Next_fruid++
+            }
+          },
+          score:function(){
+              this.speed += 5000
+          }
+        },
+      });
+        
     </script>
 </body>
 </html>
