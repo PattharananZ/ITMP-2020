@@ -34,7 +34,7 @@
             </main>
         </section>
         <section id="canvas_footer">
-            <div v-if="play" class="btn" id="toggle">
+            <div v-if="play" class="btn" id="toggle" @click="swap">
                 Toggle
             </div>
             <div v-if="!play" class="btn" id="endgame">
@@ -58,13 +58,13 @@
                 isRightArrow: 0,
                 speed: speed,
                 play:true,
-                time:0,
+                turn:0,
                 score:0,
                 fruits:[
-                    {id:1,type:13,pst:6,run:true,step:1},
-                    {id:2,type:11,pst:3,run:true,step:1},
-                    {id:3,type:11,pst:2,run:true,step:1},
-                    {id:4,type:13,pst:1,run:true,step:1},
+                    {id:1,type:'red',pst:6,run:true,step:1},
+                    {id:2,type:'yellow',pst:3,run:true,step:1},
+                    {id:3,type:'yellow',pst:2,run:true,step:1},
+                    {id:4,type:'red',pst:1,run:true,step:1},
                 ],
             },
             methods : {
@@ -109,11 +109,11 @@
             }
             if (rand(1,10) % 2 == 0){
                 if(rand(1,10)%2 == 0){
-                    this.fruits.push({id: Next_fruid,type:'red',pst: 1,run:true,step:1})
+                    this.fruits.push({id: Next_fruit,type:'red',pst: 1,run:true,step:1})
                 }else{
-                    this.fruits.push({id: Next_fruid,type:'yellow',pst: 1,run:true,step:1})
+                    this.fruits.push({id: Next_fruit,type:'yellow',pst: 1,run:true,step:1})
                 }
-                Next_fruid++
+                Next_fruit++
             }
           },
           score:function(){
@@ -123,7 +123,7 @@
       });
       let playing = setInterval(() => {
         app.turn++;
-      }, speed);
+      }, app.speed);
         
     </script>
 </body>
